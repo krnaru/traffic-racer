@@ -6,19 +6,22 @@
 
 .score_div {
     position: absolute;
-    margin-top: 20%;
-    margin-left: 10%;
+    margin-top: 2%;
+    margin-left: 2%;
+    margin-right: 5%;
     font-size: 35px;
     background-color: white;
     color: #454545;
     padding: 10px;
     border-radius: 10px;
 }
+
 .game {
     background-color: #454545;
     background-repeat: no-repeat;
     background-size: 100% 100%;
 }
+
 .startScreen {
     width: 300px;
     height: 80px;
@@ -98,7 +101,29 @@
     font-size: 14px;
     box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 0px 0px, rgba(0, 0, 0, 0.2) 0px -1px 0px 0px inset;
 }
+
 .ClickToStart:hover {
     background: #006e52;
+}
 
+.startPause {
+    margin: 5px;
+    display: inline-block;
+    outline: 0;
+    cursor: pointer;
+    text-align: center;
+    border: 0;
+    padding: 7px 16px;
+    min-height: 36px;
+    min-width: 36px;
+    color: #ffffff;
+    background: #c82500;
+    border-radius: 4px;
+    font-weight: 500;
+    font-size: 14px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 0px 0px, rgba(0, 0, 0, 0.2) 0px -1px 0px 0px inset;
+}
+
+.div-none {
+    display: none;
 }

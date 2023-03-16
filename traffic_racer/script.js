@@ -1,12 +1,15 @@
 const score = document.querySelector('.score');
+const scoreDiv = document.querySelector('.score_div');
 const highScore = document.querySelector('.highScore');
 const startScreen = document.querySelector('.startScreen');
 const gameArea = document.querySelector('.gameArea');
 const ClickToStart = document.querySelector('.ClickToStart');
 const tutorialText = document.querySelector(".tutorial");
+const startPauseButton = document.querySelector('.startPause');
 
-// const grass = document.querySelector('.grass');
-// const garden = document.querySelector('.garden');
+const windowHeight = window.innerHeight;
+
+startPauseButton.addEventListener('click', startPause);
 ClickToStart.addEventListener('click', Start);
 document.addEventListener('keydown', keydown);
 document.addEventListener('keyup', keyup);
@@ -21,21 +24,43 @@ let player = {
     score: 0,
     highScore: 0
 };
+
+let isPaused = false;
+
 function keydown(e) {
     keys[e.key] = true
 }
+
 function keyup(e) {
     keys[e.key] = false;
 }
+
+function startPause() {
+    if (!player.isStart) {
+        Start();
+    } else {
+        if (!isPaused) {
+            isPaused = true;
+            startPauseButton.textContent = "Resume";
+        } else {
+            isPaused = false;
+            startPauseButton.textContent = "Pause";
+            window.requestAnimationFrame(Play);
+        }
+    }
+}
+
 // starting the game
 function Start() {
     gameArea.innerHTML = "";
     startScreen.style.display = "none";
+    scoreDiv.style.display = "initial";
+    startPauseButton.style.display = "initial";
     player.isStart = true;
     player.score = 0;
     window.requestAnimationFrame(Play);
     // creating the road lines
-    for (i = 0; i < 5; i++) {
+    for (i = 0; i < 10; i++) {
         let roadLines = document.createElement('div');
         roadLines.setAttribute('class', 'roadLines');
         roadLines.y = (i * 140);
@@ -61,7 +86,7 @@ function Start() {
 function Play() {
     let car = document.querySelector('.car');
     let road = gameArea.getBoundingClientRect();
-    if (player.isStart) {
+    if (player.isStart && !isPaused) {
         moveLines();
         moveOpponents(car);
         if (keys.ArrowUp && player.y > (road.top + 70)) { player.y -= player.speed }
@@ -82,23 +107,25 @@ function Play() {
         window.requestAnimationFrame(Play);
     }
 }
+
 function moveLines() {
     let roadLines = document.querySelectorAll('.roadLines');
-    roadLines.forEach(function (item) {
-        if (item.y >= 700)
-            item.y -= 700;
+    roadLines.forEach(function(item) {
+        if (item.y >= windowHeight + 100)
+            item.y -= windowHeight + 100;
         item.y += player.speed;
         item.style.top = item.y - 100 + "px";
     })
 }
+
 function moveOpponents(car) {
     let Opponents = document.querySelectorAll('.Opponents');
-    Opponents.forEach(function (item) {
+    Opponents.forEach(function(item) {
         if (isCollide(car, item)) {
             endGame();
         }
-        if (item.y >= 750) {
-            item.y -= 900;
+        if (item.y >= windowHeight + 50) {
+            item.y -= windowHeight + 300;
             item.style.left = Math.floor(Math.random() * 350) + "px";
         }
         item.y += player.speed;
@@ -117,6 +144,6 @@ function endGame() {
     player.speed = 5;
     startScreen.style.display = "initial";
     ClickToStart.innerHTML = "Restart game";
-    ClickToStart.style.background = rgb(248, 161, 0);
+    ClickToStart.style.background = "#f8a100";
     tutorialText.style.display = "none";
 }

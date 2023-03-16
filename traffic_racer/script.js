@@ -3,6 +3,8 @@ const highScore = document.querySelector('.highScore');
 const startScreen = document.querySelector('.startScreen');
 const gameArea = document.querySelector('.gameArea');
 const ClickToStart = document.querySelector('.ClickToStart');
+const tutorialText = document.querySelector(".tutorial");
+
 // const grass = document.querySelector('.grass');
 // const garden = document.querySelector('.garden');
 ClickToStart.addEventListener('click', Start);
@@ -48,20 +50,12 @@ function Start() {
         Opponents.style.top = Opponents.y + "px";
         gameArea.appendChild(Opponents);
         Opponents.style.left = Math.floor(Math.random() * 350) + "px";
-        Opponents.style.backgroundColor = randomColor();
     }
     let car = document.createElement('div');
     car.setAttribute('class', 'car');
     gameArea.appendChild(car);
     player.x = car.offsetLeft;
     player.y = car.offsetTop;
-}
-function randomColor() {
-    function c() {
-        let hex = Math.floor(Math.random() * 256).toString(16);
-        return ("0" + String(hex)).substr(-2);
-    }
-    return "#" + c() + c() + c();
 }
 //play the game
 function Play() {
@@ -94,7 +88,7 @@ function moveLines() {
         if (item.y >= 700)
             item.y -= 700;
         item.y += player.speed;
-        item.style.top = item.y + "px";
+        item.style.top = item.y - 100 + "px";
     })
 }
 function moveOpponents(car) {
@@ -121,5 +115,8 @@ function isCollide(a, b) {
 function endGame() {
     player.isStart = false;
     player.speed = 5;
-    startScreen.classList.remove('hide');
+    startScreen.style.display = "initial";
+    ClickToStart.innerHTML = "Restart game";
+    ClickToStart.style.background = rgb(248, 161, 0);
+    tutorialText.style.display = "none";
 }

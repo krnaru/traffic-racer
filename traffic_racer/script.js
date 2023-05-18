@@ -146,4 +146,5 @@ function endGame() {
     ClickToStart.innerHTML = "Restart game";
     ClickToStart.style.background = "#f8a100";
     tutorialText.style.display = "none";
+    startPauseButton.style.display = "none";
 }
